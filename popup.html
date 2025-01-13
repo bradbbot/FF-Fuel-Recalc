@@ -8,7 +8,13 @@
       padding: 10px;
     }
     .input-field {
+      display: flex; /* Use flexbox for alignment */
+      align-items: center; /* Center items vertically */
       margin: 10px 0;
+    }
+    .input-field label {
+      flex: 1; /* Allow label to take up space */
+      margin-right: 10px; /* Space between label and input */
     }
     .title {
       font-weight: bold;
@@ -42,7 +48,7 @@
 <body>
   <div class="title">ForeFlight Fuel Calculator</div>
   <div class="input-field">
-    <label>Original Block Fuel: </label>
+    <label>Block Fuel: </label>
     <div class="block-fuel-container">
       <span id="block-fuel">Click Load</span>
       <button id="load-block-fuel">Load</button>
