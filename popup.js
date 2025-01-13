@@ -214,25 +214,22 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
 
             // Update the bottom fuel summary
-            const bottomSummaryBlockFuel = iframeDocument.querySelector(
-              ".fuel-weights .dont-break-container:nth-of-type(1) td:last-child"
-            );
-            const bottomSummaryReserveFuel = iframeDocument.querySelector(
-              ".fuel-weights .dont-break-container:nth-of-type(3) td:last-child"
-            );
-            const bottomSummaryExtraFuel = iframeDocument.querySelector(
-              ".fuel-weights .dont-break-container:nth-of-type(4) td:last-child"
-            );
+            const bottomSummaryRows = iframeDocument.querySelectorAll(".fuel-weights .dont-break-container tr");
             
-            if (bottomSummaryBlockFuel) {
-              bottomSummaryBlockFuel.textContent = `${newBlockFuel.toFixed(1)} g`;
-            }
-            if (bottomSummaryReserveFuel) {
-              bottomSummaryReserveFuel.textContent = `${reserveFuel.toFixed(1)} g`;
-            }
-            if (bottomSummaryExtraFuel) {
-              bottomSummaryExtraFuel.textContent = `${extraFuel.toFixed(1)} g`;
-            }
+            bottomSummaryRows.forEach(row => {
+              const label = row.children[0]?.textContent?.trim();
+              const valueCell = row.children[1];
+              
+              if (label === "Block Fuel" && valueCell) {
+                valueCell.textContent = `${newBlockFuel.toFixed(1)} g`;
+              }
+              else if (label === "Reserve Fuel" && valueCell) {
+                valueCell.textContent = `${reserveFuel.toFixed(1)} g`;
+              }
+              else if (label === "Extra Fuel" && valueCell) {
+                valueCell.textContent = `${extraFuel.toFixed(1)} g`;
+              }
+            });
           },
           args: [currentBlockFuel + reserveFuel + extraFuel, reserveFuel, extraFuel, originalREMValues, useOriginalREM],
         },
@@ -272,7 +269,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   document.getElementById("load-block-fuel").addEventListener("click", async () => {
-    await loadBlockFuel();  // Removed updateBlockFuelOnPage call
+    await loadBlockFuel();
   });
 
   document.getElementById("hide").addEventListener("click", () => {
