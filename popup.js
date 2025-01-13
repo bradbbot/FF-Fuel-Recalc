@@ -6,10 +6,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   let reserveFuel = 0;
   let extraFuel = 0;
   let originalREMValues = [];
+  let originalWaypoints = [];
 
   // Get the current tab's URL to use as part of the storage key
   const [currentTab] = await chrome.tabs.query({ active: true, currentWindow: true });
   const storageKey = `navlog_${currentTab.url}`;
+
+  // Send a message to make waypoint cells editable immediately
+  chrome.tabs.sendMessage(currentTab.id, { action: "makeWaypointsEditable" });
 
   // Try to load stored values when popup opens
   chrome.storage.local.get([storageKey], (result) => {
@@ -17,6 +21,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const storedData = result[storageKey];
       originalBlockFuel = storedData.originalBlockFuel;
       originalREMValues = storedData.originalREMValues;
+      originalWaypoints = storedData.originalWaypoints || [];
       currentBlockFuel = originalBlockFuel;
       
       // Update UI to show stored values
@@ -60,13 +65,15 @@ document.addEventListener("DOMContentLoaded", async () => {
             originalBlockFuel = response.blockFuel;
             currentBlockFuel = response.blockFuel;
             originalREMValues = response.remValues || [];
+            originalWaypoints = response.waypointValues || [];
             
             // Store values in Chrome storage with URL-specific key
             const storageKey = `navlog_${tab.url}`;
             chrome.storage.local.set({
               [storageKey]: {
                 originalBlockFuel: originalBlockFuel,
-                originalREMValues: originalREMValues
+                originalREMValues: originalREMValues,
+                originalWaypoints: originalWaypoints
               }
             });
 
@@ -275,4 +282,50 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("hide").addEventListener("click", () => {
     window.close();
   });
+
+  const resetWaypoints = () => {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      if (!tabs || tabs.length === 0) {
+        console.error("No active tab found.");
+        return;
+      }
+
+      const activeTab = tabs[0];
+      chrome.scripting.executeScript(
+        {
+          target: { tabId: activeTab.id },
+          func: (originalWaypoints) => {
+            const frames = document.querySelectorAll("iframe");
+            const targetFrame = Array.from(frames).find((frame) =>
+              frame.src.includes("/flightdata/api/briefing/performance/proxy/iframe")
+            );
+
+            if (!targetFrame) {
+              console.error("Target iframe not found.");
+              return;
+            }
+
+            const iframeDocument = targetFrame.contentDocument || targetFrame.contentWindow.document;
+            const waypointCells = iframeDocument.querySelectorAll('tr.table-data-row td:nth-child(1)');
+
+            waypointCells.forEach((cell, index) => {
+              if (originalWaypoints[index]) {
+                cell.textContent = originalWaypoints[index].original;
+              }
+            });
+          },
+          args: [originalWaypoints],
+        },
+        () => {
+          if (chrome.runtime.lastError) {
+            console.error("Script execution failed:", chrome.runtime.lastError.message);
+          } else {
+            console.log("Waypoints reset to original values.");
+          }
+        }
+      );
+    });
+  };
+
+  document.getElementById("reset-waypoints").addEventListener("click", resetWaypoints);
 });

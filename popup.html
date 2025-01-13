@@ -10,69 +10,58 @@
     .input-field {
       margin: 10px 0;
     }
-    .input-field label {
-      display: inline-block;
-      width: 120px;
-    }
-    .input-field input {
-      width: 80px;
-    }
-    button {
-      margin: 5px;
-    }
-    button:disabled {
-      background-color: #cccccc;
-      cursor: not-allowed;
+    .title {
+      font-weight: bold;
+      margin-bottom: 15px;
+      font-size: 16px;
     }
     .block-fuel-container {
       display: flex;
       align-items: center;
       gap: 10px;
-      margin: 10px 0;
-    }
-    #block-fuel {
-      display: inline-block;
-      min-width: 80px;
     }
     #load-block-fuel {
-      min-width: 60px;
+      padding: 2px 8px;
+      cursor: pointer;
     }
-    .button-container {
-      display: flex;
+    .button-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 5px;
-      justify-content: flex-start;
-      margin-top: 10px;
+      margin-top: 15px;
     }
-    #calculate {
-      min-width: 120px;
+    .button-grid button {
+      padding: 5px 10px;
+      cursor: pointer;
     }
-    #reset, #hide {
-      min-width: 60px;
+    #block-fuel {
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <h2>FF Fuel Recalc</h2>
-  <div class="block-fuel-container">
-    <div>Block Fuel:</div>
-    <div id="block-fuel">Click Load</div>
-    <button id="load-block-fuel">Load</button>
-  </div>
-  <hr>
+  <div class="title">ForeFlight Fuel Calculator</div>
   <div class="input-field">
-    <label for="reserve-fuel">Reserve Fuel (g):</label>
+    <label>Block Fuel: </label>
+    <div class="block-fuel-container">
+      <span id="block-fuel">Click Load</span>
+      <button id="load-block-fuel">Load</button>
+    </div>
+  </div>
+  <div class="input-field">
+    <label>Reserve Fuel: </label>
     <input type="number" id="reserve-fuel" value="0">
   </div>
   <div class="input-field">
-    <label for="extra-fuel">Extra Fuel (g):</label>
+    <label>Extra Fuel: </label>
     <input type="number" id="extra-fuel" value="0">
   </div>
-  <div class="button-container">
+  <div class="button-grid">
     <button id="calculate">Recalculate Fuel</button>
-    <button id="reset">Reset</button>
+    <button id="reset">Reset Fuel</button>
+    <button id="reset-waypoints">Reset Waypoints</button>
     <button id="hide">Hide</button>
   </div>
-
   <script src="popup.js"></script>
 </body>
 </html>
