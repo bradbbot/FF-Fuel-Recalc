@@ -38,12 +38,13 @@ FF Fuel Recalc is a Chrome extension designed to help pilots using ForeFlight by
 - `popup.html`: HTML file for the popup interface.
 - `style.css`: (if applicable) CSS file for styling the popup.
 
-## Screenshots
-![Screenshot of the extension](screenshot.png)
-
-
 ## Contributing
 Feel free to submit issues or pull requests if you have suggestions for improvements or new features.
 
 ## License
 This project is licensed under the GNU General Public License v3.0 (GPL-3.0).
+
+
+## Screenshots
+![Screenshot of the extension](newscreenshot.png)
+
