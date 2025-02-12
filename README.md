@@ -1,7 +1,7 @@
 # FF Fuel Recalc
 
 ## Description
-FF Fuel Recalc is a Chrome extension designed to help pilots using ForeFlight by recalculating fuel values and allowing for easy management of waypoint names directly within the application.
+FF Fuel Recalc is a Chrome extension designed to help pilots using ForeFlight by recalculating fuel values on Foreflight Web generated NavLogs and allowing for easy management of waypoint names directly within the application.
 
 ## Features
 - **Recalculate Fuel**: Automatically updates fuel values based on user input for block fuel, reserve fuel, and extra fuel.
@@ -19,7 +19,7 @@ FF Fuel Recalc is a Chrome extension designed to help pilots using ForeFlight by
 5. Click "Load unpacked" and select the directory containing the unpacked extension files.
 
 ## Usage
-1. Navigate to a valid ForeFlight navlog URL.
+1. Navigate to a valid ForeFlight Web navlog URL.
 2. Click on the extension icon to open the popup.
 3. Load the block fuel values by clicking the "Load" button.
 4. Edit waypoint names directly by clicking on them.
