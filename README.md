@@ -5,7 +5,7 @@ FF Fuel Recalc is a Chrome extension designed to help pilots using ForeFlight by
 
 ## Features
 - **Recalculate Fuel**: Automatically updates fuel values based on user input for block fuel, reserve fuel, and extra fuel.
-- **Editable Waypoints**: Users can click on waypoint names to rename them directly in the navlog.
+- **Editable Waypoints and Souls on Board**: Users can click on waypoint names and Souls on Board to rename them directly in the navlog.
 - **Reset Functionality**: 
   - **Reset Fuel**: Resets the fuel values to the original block fuel.
   - **Reset Waypoints**: Restores waypoint names to their original values.
@@ -22,7 +22,7 @@ FF Fuel Recalc is a Chrome extension designed to help pilots using ForeFlight by
 1. Navigate to a valid ForeFlight Web navlog URL.
 2. Click on the extension icon to open the popup.
 3. Load the block fuel values by clicking the "Load" button.
-4. Edit waypoint names directly by clicking on them.
+4. Edit waypoint names and souls directly by clicking on them.
 5. Use the "Recalculate Fuel" button to update fuel values based on the inputs.
 6. Click "Reset Fuel" to revert to the original block fuel values.
 7. Click "Reset Waypoints" to restore the original waypoint names.
