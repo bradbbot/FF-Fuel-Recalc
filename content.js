@@ -65,6 +65,45 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       };
     });
 
+    // First, make all cells in Summary & Times non-editable
+    const summaryTimesRows = iframeDoc.querySelectorAll('.summary-times tr.table-data-row');
+    summaryTimesRows.forEach(row => {
+      const cells = row.querySelectorAll('td');
+      cells.forEach(cell => {
+        cell.contentEditable = false;
+        cell.style.cursor = 'default';
+        cell.removeAttribute('data-tooltip');
+        cell.title = '';
+      });
+    });
+
+    // Then, make only the Souls on Board value cell editable
+    const soulsOnBoardRow = Array.from(summaryTimesRows).find(row => 
+      row.querySelector('td').textContent.trim() === 'Souls on board'
+    );
+    
+    if (soulsOnBoardRow) {
+      const soulsOnBoardCell = soulsOnBoardRow.querySelector('td:nth-child(2)');
+      if (soulsOnBoardCell) {
+        // Make cell editable
+        soulsOnBoardCell.contentEditable = true;
+        soulsOnBoardCell.style.cursor = 'pointer';
+        soulsOnBoardCell.title = 'Click to Edit';
+        
+        // Add tooltip using data attribute and CSS
+        soulsOnBoardCell.setAttribute('data-tooltip', 'Click to Edit');
+        soulsOnBoardCell.style.position = 'relative';
+        
+        // Add hover effect
+        soulsOnBoardCell.addEventListener('mouseover', () => {
+          soulsOnBoardCell.style.backgroundColor = '#f0f0f0';
+        });
+        soulsOnBoardCell.addEventListener('mouseout', () => {
+          soulsOnBoardCell.style.backgroundColor = '';
+        });
+      }
+    }
+
     sendResponse({
       blockFuel: parseFloat(blockFuelSpan?.textContent) || 0,
       remValues: remValues,
@@ -120,6 +159,45 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         cell.style.backgroundColor = '';
       });
     });
+
+    // First, make all cells in Summary & Times non-editable
+    const summaryTimesRows = iframeDoc.querySelectorAll('.summary-times tr.table-data-row');
+    summaryTimesRows.forEach(row => {
+      const cells = row.querySelectorAll('td');
+      cells.forEach(cell => {
+        cell.contentEditable = false;
+        cell.style.cursor = 'default';
+        cell.removeAttribute('data-tooltip');
+        cell.title = '';
+      });
+    });
+
+    // Then, make only the Souls on Board value cell editable
+    const soulsOnBoardRow = Array.from(summaryTimesRows).find(row => 
+      row.querySelector('td').textContent.trim() === 'Souls on board'
+    );
+    
+    if (soulsOnBoardRow) {
+      const soulsOnBoardCell = soulsOnBoardRow.querySelector('td:nth-child(2)');
+      if (soulsOnBoardCell) {
+        // Make cell editable
+        soulsOnBoardCell.contentEditable = true;
+        soulsOnBoardCell.style.cursor = 'pointer';
+        soulsOnBoardCell.title = 'Click to Edit';
+        
+        // Add tooltip using data attribute and CSS
+        soulsOnBoardCell.setAttribute('data-tooltip', 'Click to Edit');
+        soulsOnBoardCell.style.position = 'relative';
+        
+        // Add hover effect
+        soulsOnBoardCell.addEventListener('mouseover', () => {
+          soulsOnBoardCell.style.backgroundColor = '#f0f0f0';
+        });
+        soulsOnBoardCell.addEventListener('mouseout', () => {
+          soulsOnBoardCell.style.backgroundColor = '';
+        });
+      }
+    }
   }
 
   return true;
